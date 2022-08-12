@@ -4,15 +4,20 @@
 Profile: MyPatient
 Parent: Patient
 Description: "An example profile of the Patient resource."
+* identifier ^slicing.discriminator[+].type = #pattern
+* identifier ^slicing.discriminator[=].path = "type"
+* identifier ^slicing.rules = #open
+
+Profile: MyDerivedPatient
+Parent: MyPatient
+Description: "An example profile of the Patient resource."
+* identifier ^slicing.discriminator[+].type = #pattern
+* identifier ^slicing.discriminator[=].path = "type"
 * identifier ^slicing.discriminator[+].type = #value
 * identifier ^slicing.discriminator[=].path = "system"
 * identifier ^slicing.rules = #open
 
-Profile: MyDerivedPatient
-Parent: Patient
-Description: "An example profile of the Patient resource."
-* identifier ^slicing.discriminator[+].type = #value
-* identifier ^slicing.discriminator[=].path = "system"
-* identifier ^slicing.discriminator[+].type = #pattern
-* identifier ^slicing.discriminator[=].path = "type"
-* identifier ^slicing.rules = #open
+Instance: DerivedPatientEx
+InstanceOf: MyDerivedPatient
+* active = true
+* identifier.value = "123"
